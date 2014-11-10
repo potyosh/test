@@ -3,15 +3,14 @@ c = 0
 # + or - or / or *
 cmplist = []
 mylist = []
-def search(arg_list, x, y):
+def search(arg_list, y, x):
 	global c
 	global cmplist
 	c += 1
+	print y
 	print x
-	print str(y) + '\n'
 	if x < 0 or y < 0 or y >= len(arg_list) or x >= len(arg_list[0]) or cmplist[y][x] != ' ' or c > 30 :
-		print "nil:" + str(c) + ":" + "x = " + str(x) + ": " + "y = " + str(y)
-		print str(cmplist[y][x])
+		print "nil:" + str(c) + ":" + "y = " + str(y) + ": " + "x = " + str(x)
 		return 1
 
 	cmplist[y][x] = '*'
