@@ -1,7 +1,8 @@
 #!/usr/bin/python
-c = 
+c = 0
 # + or - or / or *
 cmplist = []
+mylist = []
 def search(arg_list, x, y):
 	global c
 	c += 1
@@ -13,13 +14,19 @@ def search(arg_list, x, y):
 	search(arg_list, x, y+1)
 	search(arg_list, x-1, y)
 
-mylist = []
 for line in open('data.txt', 'r'):
 	line = line.rstrip()
 	mylist.append(line)
+	#initialize output list
+	cmplist.append(' ' * len(line))
 
+# input
 for x in mylist :      
 	print x;
 
-search(mylist, 0, 0)
+# output
+for x in cmplist :      
+	print x;
+
+#search(mylist, 0, 0)
 
