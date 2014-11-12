@@ -2,6 +2,13 @@
 # + or - or / or *
 cmplist = []
 mylist = []
+colorlist = []
+
+def checkChar(arg_list, arg_y, arg_x):
+	for x in arg_list :      
+		print x;
+
+	return '*'
 
 def search(arg_list, y, x, arg_color):
 
@@ -25,15 +32,23 @@ for line in open('data.txt', 'r'):
 	#initialize output list
 	cmplist.append(map(str, str(' ' * len(line))))
 
-# input
-for x in mylist :      
-	print x;
+for line in open('color.txt', 'r'):
+	line = line.rstrip()
+	colorlist.append(str(line))
 
-search(mylist, 0, 0, '*')
+# input
+# for x in mylist :      
+# 	print x;
+
+# for y in range(0, len(mylist)):
+# 	for x in range(0, len(mylist[0])):
+# 		if cmplist[y][x] == ' ':
+# 			search(mylist, y, x, '*')		
 
 # output
-for x in cmplist :      
-	print x;
+# for x in cmplist :      
+# 	print x;
 
+print checkChar(colorlist, 0, 0)
 
 
