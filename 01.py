@@ -5,8 +5,10 @@ mylist = []
 colorlist = []
 poslist = []
 
-def getColor(arg_cmplist, arg_poslist):
-	print poslist;
+def getColor(arg_colorlist, arg_poslist):
+	print "------------------------"
+	for pos in arg_poslist:   
+		print pos
 	return '*'
 
 def search(arg_list, y, x, arg_color):
@@ -16,7 +18,7 @@ def search(arg_list, y, x, arg_color):
 
 	print "------------------------"
 	cmplist[y][x] = arg_color
-	poslist.append([x,y])
+	poslist.append([y,x])
 	if y > 0 and cmplist[y-1][x] == ' ' and arg_list[y][x] == arg_list[y-1][x]:
 		search(arg_list, y-1, x, arg_color)
 	if x+1 < len(arg_list[0]) and cmplist[y][x+1] == ' ' and arg_list[y][x] == arg_list[y][x+1]:
@@ -34,7 +36,7 @@ for line in open('data.txt', 'r'):
 
 for line in open('color.txt', 'r'):
 	line = line.rstrip()
-	colorlist.append(str(line))
+	colorlist.append(map(str, str(line)))
 
 # input
 for x in mylist :      
@@ -52,7 +54,7 @@ search(mylist, 3, 3, '@')
 for x in cmplist :      
 	print x;
 
-myColor = getColor(cmplist, poslist)
+myColor = getColor(colorlist, poslist)
 print myColor
 #print checkChar(colorlist, 0, 0)
 
