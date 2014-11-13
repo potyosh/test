@@ -3,11 +3,10 @@
 cmplist = []
 mylist = []
 colorlist = []
+poslist = []
 
-def checkChar(arg_list, arg_y, arg_x):
-	for x in arg_list :      
-		print x;
-
+def getColor(arg_cmplist, arg_poslist):
+	print poslist;
 	return '*'
 
 def search(arg_list, y, x, arg_color):
@@ -17,6 +16,7 @@ def search(arg_list, y, x, arg_color):
 
 	print "------------------------"
 	cmplist[y][x] = arg_color
+	poslist.append([x,y])
 	if y > 0 and cmplist[y-1][x] == ' ' and arg_list[y][x] == arg_list[y-1][x]:
 		search(arg_list, y-1, x, arg_color)
 	if x+1 < len(arg_list[0]) and cmplist[y][x+1] == ' ' and arg_list[y][x] == arg_list[y][x+1]:
@@ -37,18 +37,23 @@ for line in open('color.txt', 'r'):
 	colorlist.append(str(line))
 
 # input
-# for x in mylist :      
-# 	print x;
+for x in mylist :      
+	print x;
 
 # for y in range(0, len(mylist)):
 # 	for x in range(0, len(mylist[0])):
 # 		if cmplist[y][x] == ' ':
-# 			search(mylist, y, x, '*')		
+# 			posList = search(mylist, y, x, '*')	
+#			myColor = getColor(cmplist, posList)
+#			setColor(posList, myColor)
 
+search(mylist, 3, 3, '@')
 # output
-# for x in cmplist :      
-# 	print x;
+for x in cmplist :      
+	print x;
 
-print checkChar(colorlist, 0, 0)
+myColor = getColor(cmplist, poslist)
+print myColor
+#print checkChar(colorlist, 0, 0)
 
 
