@@ -5,11 +5,41 @@ mylist = []
 colorlist = []
 poslist = []
 
-def getColor(arg_colorlist, arg_poslist):
+def setColor(arg_poslist, arg_color):
+	print arg_poslist
+	print arg_color
+
+def getAvailableColor(arg_colorlist, arg_poslist):
 	print "------------------------"
-	for pos in arg_poslist:   
-		print pos
-	return '*'
+	usedColor = []
+	for pos in arg_poslist:
+		#above
+		if pos[0]-1 > 0 and cmplist[pos[0]-1][pos[1]] != '@':
+			if arg_colorlist[pos[0]-1][pos[1]] not in usedColor:
+				usedColor.append(arg_colorlist[pos[0]-1][pos[1]])
+		#right
+		if pos[1]+1 < len(arg_colorlist[0]) and cmplist[pos[0]][pos[1]+1] != '@':
+			if arg_colorlist[pos[0]][pos[1]+1] not in usedColor:
+				usedColor.append(arg_colorlist[pos[0]][pos[1]+1])
+		#bottom
+		if pos[0]+1 < len(arg_colorlist) and cmplist[pos[0]+1][pos[1]] != '@':
+			if arg_colorlist[pos[0]+1][pos[1]] not in usedColor:
+				usedColor.append(arg_colorlist[pos[0]+1][pos[1]])
+		#left
+		if pos[1]-1 > 0 and cmplist[pos[0]][pos[1]-1] != '@':
+			if arg_colorlist[pos[0]][pos[1]-1] not in usedColor:
+				usedColor.append(arg_colorlist[pos[0]][pos[1]-1])
+
+	if '+' not in usedColor:
+		answer = '+'
+	elif '-' not in usedColor:
+		answer = '-'
+	elif '/' not in usedColor:
+		answer = '/'
+	elif '*' not in usedColor:
+		answer = '*'
+
+	return answer
 
 def search(arg_list, y, x, arg_color):
 
@@ -49,13 +79,14 @@ for x in mylist :
 #			myColor = getColor(cmplist, posList)
 #			setColor(posList, myColor)
 
-search(mylist, 3, 3, '@')
+search(mylist, 2, 5, '@')
 # output
 for x in cmplist :      
 	print x;
 
-myColor = getColor(colorlist, poslist)
-print myColor
+myColor = getAvailableColor(colorlist, poslist)
+setColor(poslist, myColor)
+#print myColor
 #print checkChar(colorlist, 0, 0)
 
 
