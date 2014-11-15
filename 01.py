@@ -50,18 +50,9 @@ def getAvailableColor(arg_colorlist, arg_poslist):
 	if '*' not in usedColor:
 		ansColList.append('*')
 
-	print "------------------------"
-	print ansColList
-	colHist.append(ansColList)
-	return ansCol
-	#return ansColList
+	return ansColList
 
 def search(arg_list, y, x, arg_color):
-	print "~~~~"
-	for tmp in cmplist :      
-		print tmp
-
-	# print "------------------------"
 	cmplist[y][x] = arg_color
 	poslist.append([y,x])
 	if y > 0 and cmplist[y-1][x] == ' ' and arg_list[y][x] == arg_list[y-1][x]:
@@ -81,6 +72,8 @@ cmplist = []
 poslist = []
 # position list list
 allposlist = []
+# color list
+collist = []
 # color hitstory
 colHist =[]
 
@@ -89,11 +82,6 @@ for line in open('data.txt', 'r'):
 	inputlist.append(str(line))
 	#initialize output list
 	cmplist.append(map(str, str(' ' * len(line))))
-
-# for line in open('color.txt', 'r'):
-# 	line = line.rstrip()
-# 	colorlist.append(map(str, str(line)))
-
 
 for x in inputlist :      
 	print x;
@@ -104,31 +92,31 @@ for y in range(0, len(inputlist)):
 			poslist = []
 			search(inputlist, y, x, '@')	
 			allposlist.append(poslist)
-			myColor = getAvailableColor(cmplist, poslist)
-			#if myColor == '@'
-				# BackTrace!
-			setColor(poslist, myColor, cmplist)
-			#complete = checkComplete()
 
-#search(mylist, 4, 7, '@')
+# Position block list complete
+print "~~~~~~~~~~Position Block List~~~~~~~~~~~"
+for x in allposlist :
+ 	print x;
 
-#myColor = getAvailableColor(colorlist, poslist)
-#setColor(poslist, myColor)
+# Get available color list
+count = 0
+backTraceComplete = True
+for pos in allposlist :
+	collist = getAvailableColor(cmplist, pos)
+	if collist:
+		setColor(pos, collist[0], cmplist)
+	else:
+		print "~~~~~Backtrace~~~~~"
+		backTraceComplete = False
+	colHist.append(collist)
+	count += 1
 
-# output
-for x in cmplist :      
-	print x;
-
-# output
-for x in allposlist :      
-	print x;
-
+print "~~~~~~~~~~Color Hitstory List~~~~~~~~~~~"
 for x in colHist :      
 	print x;
 
-setColor(poslist, myColor, cmplist)
-
-#print myColor
-#print checkChar(colorlist, 0, 0)
-
+print "~~~~~~~~~~Answer~~~~~~~~~~~"
+# output
+for x in cmplist :      
+	print x;
 
