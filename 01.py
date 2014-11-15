@@ -16,7 +16,7 @@ def getAvailableColor(arg_colorlist, arg_poslist):
 	ansColList = []
 	for pos in arg_poslist:
 		#above
-		if pos[0]-1 > 0 and arg_colorlist[pos[0]-1][pos[1]] != '@':
+		if pos[0]-1 >= 0 and arg_colorlist[pos[0]-1][pos[1]] != '@':
 			if arg_colorlist[pos[0]-1][pos[1]] not in usedColor:
 				usedColor.append(arg_colorlist[pos[0]-1][pos[1]])
 		#right
@@ -28,7 +28,7 @@ def getAvailableColor(arg_colorlist, arg_poslist):
 			if arg_colorlist[pos[0]+1][pos[1]] not in usedColor:
 				usedColor.append(arg_colorlist[pos[0]+1][pos[1]])
 		#left
-		if pos[1]-1 > 0 and arg_colorlist[pos[0]][pos[1]-1] != '@':
+		if pos[1]-1 >= 0 and arg_colorlist[pos[0]][pos[1]-1] != '@':
 			if arg_colorlist[pos[0]][pos[1]-1] not in usedColor:
 				usedColor.append(arg_colorlist[pos[0]][pos[1]-1])
 
