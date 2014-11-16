@@ -93,7 +93,7 @@ def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmpl
 			colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex+1, arg_cmplist)
 
 	elif arg_collist:
-		print "dekita!"
+		print "Answer!"
 		setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
 		complete = True
 		return
