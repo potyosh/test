@@ -64,6 +64,26 @@ def search(arg_list, y, x, arg_color):
 	if x > 0 and cmplist[y][x-1] == ' ' and arg_list[y][x] == arg_list[y][x-1]:
 		search(arg_list, y, x-1, arg_color)
 
+def colorTrace(arg_allposlist, arg_posIndex, arg_colIndex, arg_cmplist):
+	print "~~~posindex="+str(arg_posIndex)+", colindex="+str(arg_colIndex)
+	for line in arg_cmplist:
+		print line
+	if arg_posIndex >= len(arg_allposlist):
+		return
+
+	print "color hist"
+	for x in colHist :      
+		print x;
+	collist = getAvailableColor(arg_cmplist, arg_allposlist[arg_posIndex])
+	colHist.append(collist)
+
+	if collist:
+		setColor(arg_allposlist[arg_posIndex], collist[arg_colIndex], arg_cmplist)
+
+	colorTrace(arg_allposlist, arg_posIndex+1, arg_colIndex, arg_cmplist)
+	setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
+	colorTrace(arg_allposlist, arg_posIndex-1, arg_colIndex+1, arg_cmplist)
+
 # input
 inputlist = []
 # output
@@ -75,7 +95,9 @@ allposlist = []
 # color list
 collist = []
 # color hitstory
-colHist =[]
+colHist = []
+# color apply list
+colApplyList = []
 
 for line in open('data.txt', 'r'):
 	line = line.rstrip()
@@ -93,27 +115,35 @@ for y in range(0, len(inputlist)):
 			search(inputlist, y, x, '@')	
 			allposlist.append(poslist)
 
+# Re-initialize output
+cmplist = []
+for line in inputlist:
+	#initialize output list
+	cmplist.append(map(str, str(' ' * len(line))))
+
+for line in cmplist:
+	print line
+
 # Position block list complete
 print "~~~~~~~~~~Position Block List~~~~~~~~~~~"
 for x in allposlist :
  	print x;
 
-# Get available color list
-count = 0
-backTraceComplete = True
-for pos in allposlist :
-	collist = getAvailableColor(cmplist, pos)
-	if collist:
-		setColor(pos, collist[0], cmplist)
-	else:
-		print "~~~~~Backtrace~~~~~"
-		backTraceComplete = False
-	colHist.append(collist)
-	count += 1
+colorTrace(allposlist, 0, 0, cmplist)
 
 print "~~~~~~~~~~Color Hitstory List~~~~~~~~~~~"
 for x in colHist :      
 	print x;
+
+
+count = -1
+if backTraceComplete == False:
+	for collist in reversed(colHist):
+		if len(collist) > 1:
+			print "~~~~~~~~~~Back Trace~~~~~~~~~~~"
+			print collist;
+			print allposlist[count]
+		count -= 1
 
 print "~~~~~~~~~~Answer~~~~~~~~~~~"
 # output
