@@ -69,6 +69,7 @@ def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmpl
 	
 	for line in arg_cmplist:
 		print line
+
 	if arg_posIndex >= len(arg_allposlist):
 		return
 
@@ -77,7 +78,7 @@ def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmpl
 	for x in colHist :      
 		print x;
 
-	if arg_collist:
+	if arg_collist and arg_posIndex + 1 < len(arg_allposlist):
 		print "nuru," + arg_collist[arg_colIndex]
 		setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
 		arg_posIndex += 1
@@ -89,18 +90,6 @@ def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmpl
 			colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex+1, arg_cmplist)
 
 		print "hoge" + str(arg_collist)
-
-
-	# if arg_collist and arg_posIndex+1 < len(arg_allposlist):
-	# 	setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
-	# 	if arg_posIndex+1 < len(arg_allposlist) and arg_colIndex < len(arg_collist):
-	# 		collist = getAvailableColor(arg_cmplist, arg_allposlist[arg_posIndex+1])
-	# 		colHist.append(collist)
-	# 		colorTrace(arg_allposlist, arg_posIndex+1, collist, arg_colIndex, arg_cmplist)
-	# else:
-	# 	return
-		#setColor(arg_allposlist[arg_posIndex-1], '@', arg_cmplist)
-		#colorTrace(arg_allposlist, arg_posIndex-1, collist, arg_colIndex+1, arg_cmplist)
 
 # input
 inputlist = []
