@@ -65,11 +65,11 @@ def search(arg_list, y, x, arg_color):
 		search(arg_list, y, x-1, arg_color)
 
 def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmplist):
+	global complete
+	if complete == True:
+		return
 	print "~~~posindex="+str(arg_posIndex)+", colindex="+str(arg_colIndex)
 	
-	for line in arg_cmplist:
-		print line
-
 	if arg_posIndex >= len(arg_allposlist):
 		return
 
@@ -81,16 +81,22 @@ def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmpl
 	if arg_collist and arg_posIndex + 1 < len(arg_allposlist):
 		print "nuru," + arg_collist[arg_colIndex]
 		setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
+		for line in arg_cmplist:
+			print line
 		arg_posIndex += 1
 		setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
 		arg_collist = getAvailableColor(arg_cmplist, arg_allposlist[arg_posIndex])
+
 		if arg_posIndex < len(arg_allposlist):
 			colorTrace(arg_allposlist, arg_posIndex, arg_collist, 0, arg_cmplist)
 		if arg_colIndex + 1 < len(arg_collist):
 			colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex+1, arg_cmplist)
 
-		print "hoge" + str(arg_collist)
-
+	elif arg_collist:
+		print "dekita!"
+		setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
+		complete = True
+		return
 # input
 inputlist = []
 # output
@@ -105,6 +111,8 @@ collist = []
 colHist = []
 # color apply list
 colApplyList = []
+# complete flag
+complete = False
 
 for line in open('data.txt', 'r'):
 	line = line.rstrip()
