@@ -64,25 +64,44 @@ def search(arg_list, y, x, arg_color):
 	if x > 0 and cmplist[y][x-1] == ' ' and arg_list[y][x] == arg_list[y][x-1]:
 		search(arg_list, y, x-1, arg_color)
 
-def colorTrace(arg_allposlist, arg_posIndex, arg_colIndex, arg_cmplist):
+def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmplist):
 	print "~~~posindex="+str(arg_posIndex)+", colindex="+str(arg_colIndex)
+	
 	for line in arg_cmplist:
 		print line
 	if arg_posIndex >= len(arg_allposlist):
 		return
 
 	print "color hist"
+	colHist.append(arg_collist)
 	for x in colHist :      
 		print x;
-	collist = getAvailableColor(arg_cmplist, arg_allposlist[arg_posIndex])
-	colHist.append(collist)
 
-	if collist:
-		setColor(arg_allposlist[arg_posIndex], collist[arg_colIndex], arg_cmplist)
+	if arg_collist:
+		print "nuru," + arg_collist[arg_colIndex]
+		setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
+		arg_collist = getAvailableColor(arg_cmplist, arg_allposlist[arg_posIndex])
+		arg_posIndex += 1
+		if arg_posIndex < len(arg_allposlist):
+			setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
+			colorTrace(arg_allposlist, arg_posIndex, arg_collist, 0, arg_cmplist)
+		if arg_colIndex + 1 < len(arg_collist):
+			setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
+			colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex+1, arg_cmplist)
 
-	colorTrace(arg_allposlist, arg_posIndex+1, arg_colIndex, arg_cmplist)
-	setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
-	colorTrace(arg_allposlist, arg_posIndex-1, arg_colIndex+1, arg_cmplist)
+		print "hoge" + str(arg_collist)
+
+
+	# if arg_collist and arg_posIndex+1 < len(arg_allposlist):
+	# 	setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
+	# 	if arg_posIndex+1 < len(arg_allposlist) and arg_colIndex < len(arg_collist):
+	# 		collist = getAvailableColor(arg_cmplist, arg_allposlist[arg_posIndex+1])
+	# 		colHist.append(collist)
+	# 		colorTrace(arg_allposlist, arg_posIndex+1, collist, arg_colIndex, arg_cmplist)
+	# else:
+	# 	return
+		#setColor(arg_allposlist[arg_posIndex-1], '@', arg_cmplist)
+		#colorTrace(arg_allposlist, arg_posIndex-1, collist, arg_colIndex+1, arg_cmplist)
 
 # input
 inputlist = []
@@ -129,21 +148,12 @@ print "~~~~~~~~~~Position Block List~~~~~~~~~~~"
 for x in allposlist :
  	print x;
 
-colorTrace(allposlist, 0, 0, cmplist)
+collist = getAvailableColor(cmplist, allposlist[0])
+colorTrace(allposlist, 0, collist, 0, cmplist)
 
 print "~~~~~~~~~~Color Hitstory List~~~~~~~~~~~"
 for x in colHist :      
 	print x;
-
-
-count = -1
-if backTraceComplete == False:
-	for collist in reversed(colHist):
-		if len(collist) > 1:
-			print "~~~~~~~~~~Back Trace~~~~~~~~~~~"
-			print collist;
-			print allposlist[count]
-		count -= 1
 
 print "~~~~~~~~~~Answer~~~~~~~~~~~"
 # output
