@@ -81,12 +81,11 @@ def colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex, arg_cmpl
 		print "nuru," + arg_collist[arg_colIndex]
 		setColor(arg_allposlist[arg_posIndex], arg_collist[arg_colIndex], arg_cmplist)
 		arg_posIndex += 1
+		setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
 		arg_collist = getAvailableColor(arg_cmplist, arg_allposlist[arg_posIndex])
 		if arg_posIndex < len(arg_allposlist):
-			setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
 			colorTrace(arg_allposlist, arg_posIndex, arg_collist, 0, arg_cmplist)
 		if arg_colIndex + 1 < len(arg_collist):
-			setColor(arg_allposlist[arg_posIndex], '@', arg_cmplist)
 			colorTrace(arg_allposlist, arg_posIndex, arg_collist, arg_colIndex+1, arg_cmplist)
 
 		print "hoge" + str(arg_collist)
